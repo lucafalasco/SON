@@ -1,0 +1,104 @@
+html, body {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #181818;
+  width: 100%;
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+button {
+  font: 13px 'Space Mono';
+  padding: 0;
+}
+
+canvas {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  background-color: #181818;
+  z-index: 5;
+}
+#visualizer {
+  width: 100%;
+  height: 100%;
+}
+.panel {
+  position: fixed;
+  padding: 0 50px;
+  color: #f2f2f2;
+  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 999;
+}
+.theme {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 50px;
+}
+.breadcrumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+.breadcrumb.blue {
+  background-color: #1843f9;
+}
+.breadcrumb.light_blue {
+  background-color: #18b4f9;
+}
+.breadcrumb.green {
+  background-color: #43f918;
+}
+.breadcrumb.yellow {
+  background-color: #f9ce18;
+}
+.breadcrumb.orange {
+  background-color: #f95d18;
+}
+.breadcrumb.red {
+  background-color: #F91843;
+}
+.breadcrumb.pink {
+  background-color: #ce18f9;
+}
+.breadcrumb.white {
+  background-color: #f2f2f2;
+}
+.breadcrumb:hover {
+  box-shadow: inset 0 0 0 5px #f2f2f2;
+}
+.breadcrumb.white:hover {
+  box-shadow: inset 0 0 0 5px #181818;
+}
+.fullscreen {
+  color: #f2f2f2;
+  font-size: 13px;
+  width: 120px;
+  height: 25px;
+  background: transparent;
+  border: 1px solid #f2f2f2;
+}
+.fullscreen:hover {
+  background: #f2f2f2;
+  color: #181818;
+  border: 2px solid #f2f2f2;
+}
+.fullscreen:focus {
+  outline:0;
+}

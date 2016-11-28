@@ -1,0 +1,31 @@
+{
+  "name": "Sonislab",
+  "version": "1.0.0",
+  "author": "Luca Falasco",
+  "description": "Music Visualizer",
+  "repository": "",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "([ -d dist ] && rm -R dist/); mkdir -p dist && cp -R src/static/* dist/ && NODE_ENV=production webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.13.0",
+    "babel-eslint": "^6.0.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "eslint": "^2.12.0",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-standard": "^1.3.2",
+    "eslint-plugin-promise": "^3.3.0",
+    "path": "^0.12.7",
+    "strip-loader": "^0.1.0",
+    "webpack-dev-server": "^1.14.1",
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+  }
+}

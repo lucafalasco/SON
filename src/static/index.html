@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sonislab</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+  <div id="visualizer"></div>
+  <div class="panel">
+    <div class="theme">
+      Theme:
+      <div class="breadcrumb blue" onclick="toggleTheme('blue')"></div>
+      <div class="breadcrumb light_blue" onclick="toggleTheme('light_blue')"></div>
+      <div class="breadcrumb green" onclick="toggleTheme('green')"></div>
+      <div class="breadcrumb yellow" onclick="toggleTheme('yellow')"></div>
+      <div class="breadcrumb orange" onclick="toggleTheme('orange')"></div>
+      <div class="breadcrumb red" onclick="toggleTheme('red')"></div>
+      <div class="breadcrumb pink" onclick="toggleTheme('pink')"></div>
+      <div class="breadcrumb white" onclick="toggleTheme('white')"></div>
+    </div>
+    <button class="fullscreen" onclick="launchIntoFullScreen()">FULLSCREEN</button>
+  </div>
+  <script src="bundle.js"></script>
+  </body>
+</html>
