@@ -1,7 +1,7 @@
-# SONISLAB
+# Sonislab
 
-Sonislab is a web-based music visualizer, the physics change and evolve according to the sound captured from the michropone.
-The app is built with Javascript/ES6, Web Audio API is used to get audio from the microphone into the app and the <canvas> API for 2d graphics.
+Sonislab is a web-based music visualizer, the physics change and evolve according to the sound captured from the microphone.
+The app is built with Javascript(ES6), Web Audio API is used to convert audio signals into data to feed the app and the `<canvas>` API for 2d graphics.
 
 ## Install dependencies:
 
@@ -31,6 +31,7 @@ Bundled files can be found in `dist/`
 - [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
 - [webpack](https://webpack.github.io/)
 - [Babel](https://babeljs.io/)
+
 
 ## Supported browsers
 - Chrome (recommended)
