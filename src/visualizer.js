@@ -1,26 +1,34 @@
 const COLOURS = {
-  blue       : '#1843f9',
-  light_blue : '#18b4f9',
-  green      : '#43f918',
-  yellow     : '#f9ce18',
-  orange     : '#f95d18',
-  red        : '#F91843',
-  pink       : '#ce18f9',
-  white      : '#ffffff',
+  blue       : 'rgb(0, 186, 255)',
+  green      : 'rgb(51, 208, 0)',
+  yellow     : 'rgb(255, 249, 0)',
+  orange     : 'rgb(255, 71, 0)',
+  red        : 'rgb(255, 12, 0)',
+  pink       : 'rgb(255, 0, 188)',
+}
+
+function rgbToRgba(rgb, opacity) {
+  const regEx = /rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/
+  const match = rgb.match(regEx)
+  const colours = [match[1], match[2], match[3]].join(', ')
+  if (opacity === undefined) {
+    return "rgb(" + colours + ")"
+  }
+  return "rgba(" + colours + ", " + opacity + ")"
 }
 
 const Visualizer = function () {
-  let lines = []
+  let circles = []
   let canvas
   let ctx
   let audioSource
 
-  class Slab {
-    constructor(x, y, lineSize, ctx) {
+  class Circle {
+    constructor(x, y, size, ctx) {
       this.x = x
       this.y = y
       this.angle = Math.atan(Math.abs(y) / Math.abs(x))
-      this.lineSize = lineSize
+      this.size = size
       this.ctx = ctx
       this.high = 0
     }
@@ -29,28 +37,23 @@ const Visualizer = function () {
       this.colour = colour
     }
 
-    drawLine() {
+    drawCircle() {
       const distanceFromCentre = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
 
-      // Draw lines according to relative distanceFromCentre and overallVolume
-      this.ctx.lineWidth = 1 + distanceFromCentre / 10 * Math.max(this.lineSize / 2, 1)
-      this.ctx.strokeStyle = this.colour
+      // Draw circles according to relative distanceFromCentre and overallVolume
+      const distanceVolumeRatio = 5 + Math.min(Math.pow(distanceFromCentre, 2) *
+        Math.pow(audioSource.overallVolume, 2) / 24e10, distanceFromCentre / 2)
+
       this.ctx.beginPath()
-      this.ctx.moveTo(this.x, this.y)
-      const lineLength = 5 + Math.min(
-        Math.pow(distanceFromCentre, 2) * Math.pow(audioSource.overallVolume, 2) / 24e10,
-        distanceFromCentre / 2)
-      let toX = Math.cos(this.angle) * -lineLength
-      let toY = Math.sin(this.angle) * -lineLength
-      toX *= this.x > 0 ? 1 : -1
-      toY *= this.y > 0 ? 1 : -1
-
-      this.ctx.lineTo(this.x + toX, this.y + toY)
+      this.ctx.arc(this.x, this.y, distanceVolumeRatio / 10 * this.size, 0, Math.PI * 2, true)
+      this.ctx.fillStyle = rgbToRgba(this.colour, 0.1)
+      this.ctx.fill()
+      this.ctx.lineWidth = 1
+      this.ctx.strokeStyle = rgbToRgba(this.colour, 0.8)
       this.ctx.stroke()
-      this.ctx.closePath()
 
-      // Line movement coming towards the camera
-      const speed = lineLength / 20 * this.lineSize
+      // Circle movement coming towards the camera
+      const speed = distanceVolumeRatio / 20 * this.size
       this.high -= Math.max(this.high - 0.0001, 0)
       if (speed > this.high) {
         this.high = speed
@@ -72,17 +75,17 @@ const Visualizer = function () {
     }
   }
 
-  const makeLinesArray = () => {
-    let x, y, lineSize
-    let limit = canvas.width / 5
-    lines = []
+  const makeCirclesArray = () => {
+    let x, y, size
+    let limit = canvas.width / 3
+    circles = []
 
-    // Push the lines into the array according to the limit
+    // Push the circles into the array according to the limit
     for (let i = 0; i < limit; i++) {
       x = (Math.random() - 0.5)
       y = (Math.random() - 0.5)
-      lineSize = (Math.random() + 0.1) * 3
-      lines.push(new Slab(x, y, lineSize, ctx))
+      size = (Math.random() + 0.1) * 3
+      circles.push(new Circle(x, y, size, ctx))
     }
   }
 
@@ -93,15 +96,15 @@ const Visualizer = function () {
       canvas.height = window.innerHeight
 
       ctx.translate(canvas.width / 2, canvas.height / 2)
-      makeLinesArray()
+      makeCirclesArray()
     }
   }
 
   const draw = () => {
     ctx.clearRect(-canvas.width, -canvas.height, canvas.width * 2, canvas.height * 2)
 
-    lines.forEach((line) => {
-      line.drawLine()
+    circles.forEach((circle) => {
+      circle.drawCircle()
     })
 
     window.requestAnimationFrame(draw)
@@ -116,14 +119,14 @@ const Visualizer = function () {
     ctx = canvas.getContext('2d')
     container.appendChild(canvas)
 
-    makeLinesArray()
+    makeCirclesArray()
     this.resizeCanvas()
-    Slab.prototype.setColour(COLOURS.orange)
+    Circle.prototype.setColour(COLOURS.orange)
     draw()
   }
 
   this.changeTheme = (theme) => {
-    Slab.prototype.setColour(COLOURS[theme])
+    Circle.prototype.setColour(COLOURS[theme])
   }
 }
 
