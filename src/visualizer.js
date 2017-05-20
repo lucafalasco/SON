@@ -1,20 +1,19 @@
-const COLOURS = {
-  blue       : 'rgb(0, 186, 255)',
-  green      : 'rgb(51, 208, 0)',
-  yellow     : 'rgb(255, 249, 0)',
-  orange     : 'rgb(255, 71, 0)',
-  red        : 'rgb(255, 12, 0)',
-  pink       : 'rgb(255, 0, 188)',
-}
-
 function rgbToRgba(rgb, opacity) {
   const regEx = /rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/
   const match = rgb.match(regEx)
-  const colours = [match[1], match[2], match[3]].join(', ')
+  const colors = [match[1], match[2], match[3]].join(', ')
   if (opacity === undefined) {
-    return "rgb(" + colours + ")"
+    return "rgb(" + colors + ")"
   }
-  return "rgba(" + colours + ", " + opacity + ")"
+  return "rgba(" + colors + ", " + opacity + ")"
+}
+
+function getColor(length, maxLength) {
+  const i = (length * 255 / maxLength)
+  const r = Math.round(Math.sin(0.024 * i + 0) * 127 + 128)
+  const g = Math.round(Math.sin(0.024 * i + 2) * 127 + 128)
+  const b = Math.round(Math.sin(0.024 * i + 4) * 127 + 128)
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')'
 }
 
 const Visualizer = function () {
@@ -22,6 +21,7 @@ const Visualizer = function () {
   let canvas
   let ctx
   let audioSource
+  let maxVolume = 10000
 
   class Circle {
     constructor(x, y, size, ctx) {
@@ -33,10 +33,6 @@ const Visualizer = function () {
       this.high = 0
     }
 
-    setColour(colour) {
-      this.colour = colour
-    }
-
     drawCircle() {
       const distanceFromCentre = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
 
@@ -44,12 +40,17 @@ const Visualizer = function () {
       const distanceVolumeRatio = 5 + Math.min(Math.pow(distanceFromCentre, 2) *
         Math.pow(audioSource.overallVolume, 2) / 24e10, distanceFromCentre / 2)
 
+      if (audioSource.overallVolume > maxVolume) {
+        maxVolume = audioSource.overallVolume
+      }
+      const color = getColor(audioSource.overallVolume, maxVolume)
+
       this.ctx.beginPath()
       this.ctx.arc(this.x, this.y, distanceVolumeRatio / 10 * this.size, 0, Math.PI * 2, true)
-      this.ctx.fillStyle = rgbToRgba(this.colour, 0.1)
+      this.ctx.fillStyle = rgbToRgba(color, 0.1)
       this.ctx.fill()
       this.ctx.lineWidth = 1
-      this.ctx.strokeStyle = rgbToRgba(this.colour, 0.8)
+      this.ctx.strokeStyle = rgbToRgba(color, 0.8)
       this.ctx.stroke()
 
       // Circle movement coming towards the camera
@@ -121,12 +122,7 @@ const Visualizer = function () {
 
     makeCirclesArray()
     this.resizeCanvas()
-    Circle.prototype.setColour(COLOURS.orange)
     draw()
-  }
-
-  this.changeTheme = (theme) => {
-    Circle.prototype.setColour(COLOURS[theme])
   }
 }
 
