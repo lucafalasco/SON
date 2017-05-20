@@ -3,7 +3,6 @@ import Visualizer from './visualizer'
 class MicrophoneAudioSource {
   constructor() {
     this.overallVolume = 0
-    this.bassVolume = 0
     this.streamDataArray = new Uint8Array(128)
     this.getAudio()
   }
