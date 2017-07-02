@@ -1,17 +1,16 @@
 {
-  "name": "sonislab",
+  "name": "50n15l4b",
   "version": "0.0.7",
   "author": "Luca Falasco <falasco.luca@gmail.com>",
   "description": "music visualizer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lucafalasco/sonislab.git"
+    "url": "https://github.com/lucafalasco/50n15l4b.git"
   },
   "scripts": {
     "start": "webpack-dev-server",
     "build": "([ -d dist ] && rm -R dist/); mkdir -p dist && cp -R src/static/* dist/ && NODE_ENV=production webpack"
   },
-  "author": "Luca Falasco <falasco.luca@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.13.2",

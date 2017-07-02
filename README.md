@@ -1,6 +1,6 @@
-# Sonislab
+# 50n15l4b
 
-Sonislab is a web-based music visualizer, the physics change and evolve according to the sound captured from the microphone.
+50n15l4b is a web-based music visualizer, the physics change and evolve according to the sound captured from the microphone.
 The app is built with Javascript(ES6), Web Audio API is used to convert audio signals into data to feed the app and the `<canvas>` API for 2d graphics.
 
 ## Install dependencies:
