@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   font-family: 'Space Mono', monospace;
   font-size: 12px;
   overflow: hidden;
@@ -16,10 +17,12 @@ canvas {
   position: absolute;
   margin: 0;
   padding: 0;
-  background-color: #181818;
   z-index: 5;
+  -webkit-filter: url('#goo2');
+  filter: url('#goo2');
 }
 #visualizer {
+  background-color: #181818;
   width: 100%;
   height: 100%;
 }
@@ -102,11 +105,12 @@ canvas {
   text-decoration: underline;
 }
 .fullscreen:focus {
-  outline:0;
+  outline: 0;
 }
 
 @media (min-width: 1900px) {
-  html, body {
+  html,
+  body {
     font-size: 16px;
   }
 }

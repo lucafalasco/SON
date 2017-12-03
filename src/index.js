@@ -12,7 +12,7 @@ class MicrophoneAudioSource {
     analyser.getByteFrequencyData(this.streamDataArray)
 
     let total = 0
-    this.streamDataArray.forEach((item) => {
+    this.streamDataArray.forEach(item => {
       total += item
     })
     this.overallVolume = total
@@ -21,17 +21,19 @@ class MicrophoneAudioSource {
   // Get input stream from the microphone
   getAudio() {
     if (navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({ audio : true }).then((stream) => {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)
-        const mic = audioCtx.createMediaStreamSource(stream)
-        const analyser = audioCtx.createAnalyser()
-        analyser.fftSize = 256
-        mic.connect(analyser)
-        setInterval(() => this.sampleAudioStream(analyser), 1)
-      })
-      .catch(function (err) {
-        window.alert('Error Getting Microphone Input.', err)
-      })
+      navigator.mediaDevices
+        .getUserMedia({ audio : true })
+        .then(stream => {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+          const mic = audioCtx.createMediaStreamSource(stream)
+          const analyser = audioCtx.createAnalyser()
+          analyser.fftSize = 256
+          mic.connect(analyser)
+          setInterval(() => this.sampleAudioStream(analyser), 1)
+        })
+        .catch(function (err) {
+          window.alert('Error Getting Microphone Input.', err)
+        })
     } else {
       window.alert('Browser Not Supported.')
     }
@@ -50,12 +52,12 @@ visualizer.init({
 
 window.addEventListener('resize', visualizer.resizeCanvas)
 
-window.toggleTheme = (theme) => {
+window.toggleTheme = theme => {
   visualizer.changeTheme(theme)
 }
 
 window.launchIntoFullScreen = () => {
-  const visualizerContainer = document.getElementById("visualizer")
+  const visualizerContainer = document.getElementById('visualizer')
   if (visualizerContainer.requestFullscreen) {
     visualizerContainer.requestFullscreen()
   } else if (visualizerContainer.mozRequestFullScreen) {

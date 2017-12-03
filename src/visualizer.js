@@ -3,13 +3,13 @@ function rgbToRgba(rgb, opacity) {
   const match = rgb.match(regEx)
   const colors = [match[1], match[2], match[3]].join(', ')
   if (opacity === undefined) {
-    return "rgb(" + colors + ")"
+    return 'rgb(' + colors + ')'
   }
-  return "rgba(" + colors + ", " + opacity + ")"
+  return 'rgba(' + colors + ', ' + opacity + ')'
 }
 
 function getColor(length, maxLength) {
-  const i = (length * 255 / maxLength)
+  const i = length * 255 / maxLength
   const r = Math.round(Math.sin(0.024 * i + 0) * 127 + 128)
   const g = Math.round(Math.sin(0.024 * i + 2) * 127 + 128)
   const b = Math.round(Math.sin(0.024 * i + 4) * 127 + 128)
@@ -37,8 +37,12 @@ const Visualizer = function () {
       const distanceFromCentre = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
 
       // Draw circles according to relative distanceFromCentre and overallVolume
-      const distanceVolumeRatio = 5 + Math.min(Math.pow(distanceFromCentre, 2) *
-        Math.pow(audioSource.overallVolume, 2) / 24e10, distanceFromCentre / 2)
+      const distanceVolumeRatio =
+        5 +
+        Math.min(
+          Math.pow(distanceFromCentre, 2) * Math.pow(audioSource.overallVolume, 2) / 24e10,
+          distanceFromCentre / 2
+        )
 
       if (audioSource.overallVolume > maxVolume) {
         maxVolume = audioSource.overallVolume
@@ -46,12 +50,9 @@ const Visualizer = function () {
       const color = getColor(audioSource.overallVolume, maxVolume)
 
       this.ctx.beginPath()
-      this.ctx.arc(this.x, this.y, distanceVolumeRatio / 10 * this.size, 0, Math.PI * 2, true)
-      this.ctx.fillStyle = rgbToRgba(color, 0.1)
+      this.ctx.arc(this.x, this.y, distanceVolumeRatio / 5 * this.size, 0, Math.PI * 2, true)
+      this.ctx.fillStyle = color
       this.ctx.fill()
-      this.ctx.lineWidth = 1
-      this.ctx.strokeStyle = rgbToRgba(color, 0.8)
-      this.ctx.stroke()
 
       // Circle movement coming towards the camera
       const speed = distanceVolumeRatio / 20 * this.size
@@ -67,10 +68,10 @@ const Visualizer = function () {
       const limitY = canvas.height
       const limitX = canvas.width
 
-      if ((this.y > limitY || this.y < -limitY) || (this.x > limitX || this.x < -limitX)) {
+      if (this.y > limitY || this.y < -limitY || (this.x > limitX || this.x < -limitX)) {
         // Visualisation has gone off the edge so respawn it somewhere near the middle.
-        this.x = (Math.random() - 0.5)
-        this.y = (Math.random() - 0.5)
+        this.x = Math.random() - 0.5
+        this.y = Math.random() - 0.5
         this.angle = Math.atan(Math.abs(this.y) / Math.abs(this.x))
       }
     }
@@ -83,8 +84,8 @@ const Visualizer = function () {
 
     // Push the circles into the array according to the limit
     for (let i = 0; i < limit; i++) {
-      x = (Math.random() - 0.5)
-      y = (Math.random() - 0.5)
+      x = Math.random() - 0.5
+      y = Math.random() - 0.5
       size = (Math.random() + 0.1) * 3
       circles.push(new Circle(x, y, size, ctx))
     }
@@ -101,17 +102,27 @@ const Visualizer = function () {
     }
   }
 
+  const drawRootCircle = () => {
+    const color = getColor(audioSource.overallVolume, maxVolume)
+
+    ctx.beginPath()
+    ctx.arc(0, 0, 5, 0, Math.PI * 2, true)
+    ctx.fillStyle = color
+    ctx.fill()
+  }
+
   const draw = () => {
     ctx.clearRect(-canvas.width, -canvas.height, canvas.width * 2, canvas.height * 2)
 
-    circles.forEach((circle) => {
+    circles.forEach(circle => {
       circle.drawCircle()
     })
+    drawRootCircle()
 
     window.requestAnimationFrame(draw)
   }
 
-  this.init = (options) => {
+  this.init = options => {
     audioSource = options.audioSource
     const container = document.getElementById(options.containerId)
 
