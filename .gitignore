@@ -26,9 +26,6 @@ node_modules
 # node-waf configuration
 .lock-wscript
 
-# Production folder
-dist/
-
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
