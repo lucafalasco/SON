@@ -1,0 +1,116 @@
+html,
+body {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #181818;
+  width: 100%;
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+
+canvas {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  z-index: 5;
+  -webkit-filter: url('#goo2');
+  filter: url('#goo2');
+}
+#visualizer {
+  background-color: #181818;
+  width: 100%;
+  height: 100%;
+}
+.panel {
+  position: fixed;
+  padding: 0 20px;
+  color: #f2f2f2;
+  bottom: 0;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+}
+.theme {
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  justify-content: space-between;
+  align-items: center;
+}
+.breadcrumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transition: 0.2s all;
+}
+.breadcrumb.blue {
+  background-color: rgba(0, 186, 255, 0.1);
+  border: 1px solid rgba(0, 186, 255, 0.8);
+}
+.breadcrumb.blue:hover {
+  background-color: rgba(0, 186, 255, 0.8);
+}
+.breadcrumb.green {
+  background-color: rgba(51, 208, 0, 0.1);
+  border: 1px solid rgba(51, 208, 0, 0.8);
+}
+.breadcrumb.green:hover {
+  background-color: rgba(51, 208, 0, 0.8);
+}
+.breadcrumb.yellow {
+  background-color: rgba(255, 249, 0, 0.1);
+  border: 1px solid rgba(255, 249, 0, 0.8);
+}
+.breadcrumb.yellow:hover {
+  background-color: rgba(255, 249, 0, 0.8);
+}
+.breadcrumb.orange {
+  background-color: rgba(255, 71, 0, 0.1);
+  border: 1px solid rgba(255, 71, 0, 0.8);
+}
+.breadcrumb.orange:hover {
+  background-color: rgba(255, 71, 0, 0.8);
+}
+.breadcrumb.red {
+  background-color: rgba(255, 12, 0, 0.1);
+  border: 1px solid rgba(255, 12, 0, 0.8);
+}
+.breadcrumb.red:hover {
+  background-color: rgba(255, 12, 0, 0.8);
+}
+.breadcrumb.pink {
+  background-color: rgba(255, 0, 188, 0.1);
+  border: 1px solid rgba(255, 0, 188, 0.8);
+}
+.breadcrumb.pink:hover {
+  background-color: rgba(255, 0, 188, 0.8);
+}
+.fullscreen {
+  color: #f2f2f2;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.fullscreen:hover {
+  text-decoration: underline;
+}
+.fullscreen:focus {
+  outline: 0;
+}
+
+@media (min-width: 1900px) {
+  html,
+  body {
+    font-size: 16px;
+  }
+}
