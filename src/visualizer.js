@@ -9,7 +9,7 @@ function rgbToRgba(rgb, opacity) {
 }
 
 function getColor(length, maxLength) {
-  const i = length * 255 / maxLength
+  const i = (length * 255) / maxLength
   const r = Math.round(Math.sin(0.024 * i + 0) * 127 + 128)
   const g = Math.round(Math.sin(0.024 * i + 2) * 127 + 128)
   const b = Math.round(Math.sin(0.024 * i + 4) * 127 + 128)
@@ -40,7 +40,7 @@ const Visualizer = function () {
       const distanceVolumeRatio =
         5 +
         Math.min(
-          Math.pow(distanceFromCentre, 2) * Math.pow(audioSource.overallVolume, 2) / 24e10,
+          (Math.pow(distanceFromCentre, 2) * Math.pow(audioSource.overallVolume, 2)) / 24e10,
           distanceFromCentre / 2
         )
 
@@ -50,12 +50,12 @@ const Visualizer = function () {
       const color = getColor(audioSource.overallVolume, maxVolume)
 
       this.ctx.beginPath()
-      this.ctx.arc(this.x, this.y, distanceVolumeRatio / 5 * this.size, 0, Math.PI * 2, true)
+      this.ctx.arc(this.x, this.y, (distanceVolumeRatio / 5) * this.size, 0, Math.PI * 2, true)
       this.ctx.fillStyle = color
       this.ctx.fill()
 
       // Circle movement coming towards the camera
-      const speed = distanceVolumeRatio / 20 * this.size
+      const speed = (distanceVolumeRatio / 20) * this.size
       this.high -= Math.max(this.high - 0.0001, 0)
       if (speed > this.high) {
         this.high = speed
