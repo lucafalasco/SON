@@ -22,7 +22,7 @@ class MicrophoneAudioSource {
   getAudio() {
     if (navigator.mediaDevices) {
       navigator.mediaDevices
-        .getUserMedia({ audio : true })
+        .getUserMedia({ audio: true })
         .then(stream => {
           const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
           const mic = audioCtx.createMediaStreamSource(stream)
@@ -44,8 +44,8 @@ const visualizer = new Visualizer()
 const audioSource = new MicrophoneAudioSource()
 
 visualizer.init({
-  containerId : 'visualizer',
-  audioSource : audioSource,
+  containerId: 'visualizer',
+  audioSource: audioSource,
 })
 
 // Listeners
