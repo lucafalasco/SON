@@ -48,23 +48,4 @@ visualizer.init({
   audioSource: audioSource,
 })
 
-// Listeners
-
 window.addEventListener('resize', visualizer.resizeCanvas)
-
-window.toggleTheme = theme => {
-  visualizer.changeTheme(theme)
-}
-
-window.launchIntoFullScreen = () => {
-  const visualizerContainer = document.getElementById('visualizer')
-  if (visualizerContainer.requestFullscreen) {
-    visualizerContainer.requestFullscreen()
-  } else if (visualizerContainer.mozRequestFullScreen) {
-    visualizerContainer.mozRequestFullScreen()
-  } else if (visualizerContainer.webkitRequestFullscreen) {
-    visualizerContainer.webkitRequestFullscreen()
-  } else if (visualizerContainer.msRequestFullscreen) {
-    visualizerContainer.msRequestFullscreen()
-  }
-}
