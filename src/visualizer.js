@@ -34,13 +34,15 @@ const Visualizer = function () {
 
     drawCircle() {
       const limit = Math.max(canvas.width, canvas.height) / 2
-
-      if (this.radius > limit) {
-        circles.shift()
-      }
-
       const radiusScaleFactor = scale([0, 10000], [0, 3], this.intensity)
       const radius = this.radius * radiusScaleFactor
+
+      if (radius > limit) {
+        const index = circles.indexOf(this)
+        if (index > -1) {
+          circles.splice(index, 1)
+        }
+      }
 
       ctx.beginPath()
       ctx.lineWidth = scale([0, 10000], [0, 10], this.intensity)
